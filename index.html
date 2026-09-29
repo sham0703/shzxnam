@@ -1,0 +1,1252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ComicCraft AI</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #f5f5f5;
+    color: #222;
+}
+
+/* NAVBAR */
+nav {
+    height: 70px;
+    background: #111;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 6%;
+}
+
+.logo {
+    font-size: 26px;
+    font-weight: bold;
+    color: #ffcc00;
+}
+
+nav button {
+    background: #ffcc00;
+    border: none;
+    padding: 11px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* HERO */
+.hero {
+    min-height: 330px;
+    background: linear-gradient(135deg, #222, #444);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.hero h1 {
+    font-size: 48px;
+    margin-bottom: 15px;
+}
+
+.hero span {
+    color: #ffcc00;
+}
+
+.hero p {
+    font-size: 18px;
+    margin-bottom: 25px;
+}
+
+.primary-btn {
+    background: #ffcc00;
+    border: none;
+    padding: 14px 25px;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* MAIN */
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 35px auto;
+}
+
+.section {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    margin-bottom: 25px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+}
+
+.section h2 {
+    margin-bottom: 20px;
+}
+
+/* FORM */
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+input,
+textarea,
+select {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-top: 7px;
+}
+
+textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+label {
+    font-weight: bold;
+}
+
+/* BUTTONS */
+.buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+button {
+    cursor: pointer;
+}
+
+.secondary-btn {
+    background: #222;
+    color: white;
+    border: none;
+    padding: 12px 18px;
+    border-radius: 8px;
+}
+
+.danger-btn {
+    background: #e53935;
+    color: white;
+    border: none;
+    padding: 12px 18px;
+    border-radius: 8px;
+}
+
+/* CHARACTERS */
+.character-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+.character-card {
+    background: #fafafa;
+    border: 2px solid #eee;
+    padding: 20px;
+    border-radius: 12px;
+}
+
+.avatar {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: #ffcc00;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+/* PANELS */
+.panel-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.comic-panel {
+    min-height: 260px;
+    border: 5px solid #111;
+    border-radius: 8px;
+    background: linear-gradient(#cceeff, #fff);
+    padding: 15px;
+    position: relative;
+    overflow: hidden;
+}
+
+.panel-number {
+    position: absolute;
+    top: 8px;
+    left: 10px;
+    background: #111;
+    color: white;
+    padding: 5px 9px;
+    border-radius: 5px;
+}
+
+.scene {
+    margin-top: 35px;
+    text-align: center;
+    font-size: 17px;
+    min-height: 70px;
+}
+
+.character {
+    text-align: center;
+    font-size: 55px;
+    margin: 10px;
+}
+
+.speech {
+    background: white;
+    border: 3px solid #111;
+    border-radius: 20px;
+    padding: 10px;
+    position: relative;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.speech:after {
+    content: "";
+    position: absolute;
+    bottom: -12px;
+    left: 35px;
+    border-width: 10px 8px 0;
+    border-style: solid;
+    border-color: #111 transparent transparent;
+}
+
+/* STATS */
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+}
+
+.stat {
+    background: #111;
+    color: white;
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.stat h3 {
+    font-size: 30px;
+    color: #ffcc00;
+}
+
+/* LOADING */
+.loading {
+    display: none;
+    padding: 15px;
+    background: #fff4bf;
+    border-radius: 8px;
+    margin-top: 15px;
+}
+
+/* FOOTER */
+footer {
+    background: #111;
+    color: white;
+    text-align: center;
+    padding: 25px;
+    margin-top: 40px;
+}
+
+/* RESPONSIVE */
+@media(max-width: 800px) {
+
+    .hero h1 {
+        font-size: 35px;
+    }
+
+    .form-grid,
+    .character-grid,
+    .panel-grid,
+    .stats {
+        grid-template-columns: 1fr;
+    }
+
+    nav {
+        padding: 0 20px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav>
+    <div class="logo">🎨 ComicCraft AI</div>
+
+    <button onclick="scrollToCreator()">
+        Create Comic
+    </button>
+</nav>
+
+
+<!-- HERO -->
+<section class="hero">
+
+    <div>
+
+        <h1>
+            Turn Your Ideas Into
+            <span>Comics</span>
+        </h1>
+
+        <p>
+            Create characters, stories, dialogues and comic panels.
+        </p>
+
+        <button class="primary-btn" onclick="scrollToCreator()">
+            🚀 Start Creating
+        </button>
+
+    </div>
+
+</section>
+
+
+<div class="container">
+
+
+<!-- DASHBOARD -->
+<section class="section">
+
+    <h2>📊 Comic Dashboard</h2>
+
+    <div class="stats">
+
+        <div class="stat">
+            <h3 id="comicCount">0</h3>
+            <p>Comics</p>
+        </div>
+
+        <div class="stat">
+            <h3 id="characterCount">0</h3>
+            <p>Characters</p>
+        </div>
+
+        <div class="stat">
+            <h3 id="panelCount">0</h3>
+            <p>Panels</p>
+        </div>
+
+        <div class="stat">
+            <h3 id="wordCount">0</h3>
+            <p>Words</p>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- STORY CREATOR -->
+<section class="section" id="creator">
+
+    <h2>✍️ Create Your Comic</h2>
+
+    <div class="form-grid">
+
+        <div>
+
+            <label>Comic Title</label>
+
+            <input
+                type="text"
+                id="title"
+                placeholder="Example: The Last Robot"
+            >
+
+        </div>
+
+
+        <div>
+
+            <label>Genre</label>
+
+            <select id="genre">
+
+                <option>Adventure</option>
+                <option>Comedy</option>
+                <option>Mystery</option>
+                <option>Fantasy</option>
+                <option>Science Fiction</option>
+                <option>Horror</option>
+                <option>Educational</option>
+
+            </select>
+
+        </div>
+
+    </div>
+
+
+    <br>
+
+
+    <label>Story Idea</label>
+
+    <textarea
+        id="story"
+        placeholder="Enter your story idea..."
+    ></textarea>
+
+
+    <div class="buttons">
+
+        <button
+            class="primary-btn"
+            onclick="generateStory()"
+        >
+            🤖 Generate Story
+        </button>
+
+        <button
+            class="secondary-btn"
+            onclick="clearStory()"
+        >
+            Clear
+        </button>
+
+    </div>
+
+
+    <div class="loading" id="loading">
+        🤖 ComicCraft AI is creating your story...
+    </div>
+
+
+    <div id="storyResult"></div>
+
+</section>
+
+
+
+<!-- CHARACTER CREATOR -->
+<section class="section">
+
+    <h2>🧑 Character Studio</h2>
+
+    <div class="form-grid">
+
+        <div>
+
+            <label>Character Name</label>
+
+            <input
+                type="text"
+                id="characterName"
+                placeholder="Enter character name"
+            >
+
+        </div>
+
+
+        <div>
+
+            <label>Role</label>
+
+            <select id="characterRole">
+
+                <option>Hero</option>
+                <option>Villain</option>
+                <option>Friend</option>
+                <option>Teacher</option>
+                <option>Robot</option>
+                <option>Animal</option>
+
+            </select>
+
+        </div>
+
+
+        <div>
+
+            <label>Personality</label>
+
+            <input
+                type="text"
+                id="personality"
+                placeholder="Brave, funny, intelligent..."
+            >
+
+        </div>
+
+    </div>
+
+
+    <div class="buttons">
+
+        <button
+            class="primary-btn"
+            onclick="addCharacter()"
+        >
+            ➕ Add Character
+        </button>
+
+    </div>
+
+
+    <br>
+
+    <div
+        class="character-grid"
+        id="characters"
+    ></div>
+
+</section>
+
+
+
+<!-- COMIC PANELS -->
+<section class="section">
+
+    <h2>🖼️ Comic Panels</h2>
+
+    <div
+        class="panel-grid"
+        id="panels"
+    ></div>
+
+
+    <div class="buttons">
+
+        <button
+            class="primary-btn"
+            onclick="addPanel()"
+        >
+            ➕ Add Panel
+        </button>
+
+        <button
+            class="secondary-btn"
+            onclick="saveComic()"
+        >
+            💾 Save Comic
+        </button>
+
+        <button
+            class="secondary-btn"
+            onclick="previewComic()"
+        >
+            👁️ Preview
+        </button>
+
+        <button
+            class="danger-btn"
+            onclick="deleteComic()"
+        >
+            🗑️ Delete
+        </button>
+
+    </div>
+
+</section>
+
+
+
+<!-- AI ASSISTANT -->
+<section class="section">
+
+    <h2>🤖 ComicCraft Assistant</h2>
+
+    <p>
+        Need an idea? Ask the assistant.
+    </p>
+
+    <br>
+
+    <input
+        type="text"
+        id="assistantInput"
+        placeholder="Example: Give me a superhero idea"
+    >
+
+    <div class="buttons">
+
+        <button
+            class="primary-btn"
+            onclick="askAssistant()"
+        >
+            💡 Ask AI
+        </button>
+
+    </div>
+
+    <div id="assistantResult"></div>
+
+</section>
+
+
+</div>
+
+
+<footer>
+
+    <p>
+        🎨 ComicCraft AI © 2026
+    </p>
+
+    <p>
+        Create • Imagine • Publish
+    </p>
+
+</footer>
+
+
+
+<script>
+
+/* DATA */
+
+let characters = [];
+
+let panels = [];
+
+let comics = JSON.parse(
+    localStorage.getItem("comiccraft_comics")
+) || [];
+
+
+/* SCROLL */
+
+function scrollToCreator() {
+
+    document
+        .getElementById("creator")
+        .scrollIntoView({
+            behavior: "smooth"
+        });
+
+}
+
+
+
+/* STORY GENERATOR */
+
+function generateStory() {
+
+    const title =
+        document.getElementById("title").value;
+
+    const genre =
+        document.getElementById("genre").value;
+
+    const story =
+        document.getElementById("story").value;
+
+    if (!title || !story) {
+
+        alert(
+            "Please enter comic title and story idea."
+        );
+
+        return;
+
+    }
+
+
+    const loading =
+        document.getElementById("loading");
+
+    loading.style.display = "block";
+
+
+    setTimeout(function() {
+
+        loading.style.display = "none";
+
+
+        const generatedStory = `
+
+        <div class="section">
+
+            <h3>🤖 AI Generated Story</h3>
+
+            <br>
+
+            <h2>${title}</h2>
+
+            <p>
+                Genre: ${genre}
+            </p>
+
+            <br>
+
+            <p>
+                ${story}
+            </p>
+
+            <br>
+
+            <p>
+                Our hero begins an unexpected
+                adventure and discovers a mysterious
+                secret that changes everything.
+            </p>
+
+        </div>
+
+        `;
+
+
+        document
+            .getElementById("storyResult")
+            .innerHTML = generatedStory;
+
+
+        createDefaultPanels(story);
+
+    }, 1200);
+
+}
+
+
+
+/* DEFAULT PANELS */
+
+function createDefaultPanels(story) {
+
+    panels = [
+
+        {
+            scene: "The hero enters a mysterious place.",
+            dialogue: "What is happening here?"
+        },
+
+        {
+            scene: "A strange object suddenly appears.",
+            dialogue: "I have never seen anything like this!"
+        },
+
+        {
+            scene: "The hero moves closer to the object.",
+            dialogue: "I need to find out the truth."
+        },
+
+        {
+            scene: "A mysterious sound comes from behind.",
+            dialogue: "Who is there?"
+        },
+
+        {
+            scene: "A hidden character appears.",
+            dialogue: "You were not supposed to find this."
+        },
+
+        {
+            scene: "The hero prepares for the final adventure.",
+            dialogue: "Then let's finish this!"
+        }
+
+    ];
+
+
+    renderPanels();
+
+}
+
+
+
+/* RENDER PANELS */
+
+function renderPanels() {
+
+    const container =
+        document.getElementById("panels");
+
+    container.innerHTML = "";
+
+
+    panels.forEach(function(panel, index) {
+
+        container.innerHTML += `
+
+        <div class="comic-panel">
+
+            <div class="panel-number">
+                Panel ${index + 1}
+            </div>
+
+            <div class="scene">
+                ${panel.scene}
+            </div>
+
+            <div class="character">
+                🧑
+            </div>
+
+            <div class="speech">
+
+                ${panel.dialogue}
+
+            </div>
+
+        </div>
+
+        `;
+
+    });
+
+
+    updateStats();
+
+}
+
+
+
+/* ADD PANEL */
+
+function addPanel() {
+
+    panels.push({
+
+        scene: "New comic scene",
+
+        dialogue: "Enter dialogue here."
+
+    });
+
+
+    renderPanels();
+
+}
+
+
+
+/* ADD CHARACTER */
+
+function addCharacter() {
+
+    const name =
+        document.getElementById("characterName").value;
+
+    const role =
+        document.getElementById("characterRole").value;
+
+    const personality =
+        document.getElementById("personality").value;
+
+
+    if (!name) {
+
+        alert("Enter character name.");
+
+        return;
+
+    }
+
+
+    characters.push({
+
+        name: name,
+
+        role: role,
+
+        personality: personality
+
+    });
+
+
+    document
+        .getElementById("characterName")
+        .value = "";
+
+    document
+        .getElementById("personality")
+        .value = "";
+
+
+    renderCharacters();
+
+}
+
+
+
+/* RENDER CHARACTERS */
+
+function renderCharacters() {
+
+    const container =
+        document.getElementById("characters");
+
+    container.innerHTML = "";
+
+
+    characters.forEach(function(character) {
+
+        container.innerHTML += `
+
+        <div class="character-card">
+
+            <div class="avatar">
+                🧑
+            </div>
+
+            <h3>
+                ${character.name}
+            </h3>
+
+            <p>
+                Role: ${character.role}
+            </p>
+
+            <p>
+                Personality:
+                ${character.personality}
+            </p>
+
+        </div>
+
+        `;
+
+    });
+
+
+    updateStats();
+
+}
+
+
+
+/* SAVE COMIC */
+
+function saveComic() {
+
+    const title =
+        document.getElementById("title").value;
+
+
+    if (!title) {
+
+        alert("Enter comic title first.");
+
+        return;
+
+    }
+
+
+    const comic = {
+
+        id: Date.now(),
+
+        title: title,
+
+        genre:
+            document.getElementById("genre").value,
+
+        story:
+            document.getElementById("story").value,
+
+        characters: characters,
+
+        panels: panels,
+
+        date:
+            new Date().toLocaleString()
+
+    };
+
+
+    comics.push(comic);
+
+
+    localStorage.setItem(
+        "comiccraft_comics",
+        JSON.stringify(comics)
+    );
+
+
+    updateStats();
+
+
+    alert("✅ Comic saved successfully!");
+
+}
+
+
+
+/* DELETE */
+
+function deleteComic() {
+
+    if (
+        !confirm(
+            "Delete current comic?"
+        )
+    ) {
+
+        return;
+
+    }
+
+
+    document.getElementById("title").value = "";
+
+    document.getElementById("story").value = "";
+
+    characters = [];
+
+    panels = [];
+
+
+    renderCharacters();
+
+    renderPanels();
+
+
+    document
+        .getElementById("storyResult")
+        .innerHTML = "";
+
+}
+
+
+
+/* PREVIEW */
+
+function previewComic() {
+
+    if (panels.length === 0) {
+
+        alert(
+            "Create comic panels first."
+        );
+
+        return;
+
+    }
+
+
+    let preview = `
+
+    <div class="section">
+
+        <h2>
+            📖 Comic Preview
+        </h2>
+
+        <br>
+
+        <div class="panel-grid">
+
+    `;
+
+
+    panels.forEach(function(panel, index) {
+
+        preview += `
+
+        <div class="comic-panel">
+
+            <div class="panel-number">
+                ${index + 1}
+            </div>
+
+            <div class="scene">
+                ${panel.scene}
+            </div>
+
+            <div class="character">
+                🧑
+            </div>
+
+            <div class="speech">
+                ${panel.dialogue}
+            </div>
+
+        </div>
+
+        `;
+
+    });
+
+
+    preview += `
+
+        </div>
+
+    </div>
+
+    `;
+
+
+    document
+        .getElementById("storyResult")
+        .innerHTML = preview;
+
+
+    window.scrollTo({
+        top: document.body.scrollHeight,
+        behavior: "smooth"
+    });
+
+}
+
+
+
+/* AI ASSISTANT */
+
+function askAssistant() {
+
+    const input =
+        document.getElementById("assistantInput").value
+        .toLowerCase();
+
+
+    if (!input) {
+
+        alert("Ask something first.");
+
+        return;
+
+    }
+
+
+    let answer =
+        "Try creating a hero who discovers a mysterious secret.";
+
+
+    if (input.includes("superhero")) {
+
+        answer =
+            "💥 Idea: A normal college student discovers that their shadow has superpowers.";
+
+    }
+
+    else if (input.includes("horror")) {
+
+        answer =
+            "👻 Idea: A student receives messages from a phone that was buried 20 years ago.";
+
+    }
+
+    else if (input.includes("robot")) {
+
+        answer =
+            "🤖 Idea: A forgotten robot wakes up in an abandoned school and searches for its creator.";
+
+    }
+
+    else if (input.includes("funny")) {
+
+        answer =
+            "😂 Idea: A lazy superhero tries to save the city without leaving their bed.";
+
+    }
+
+
+    document
+        .getElementById("assistantResult")
+        .innerHTML = `
+
+        <div class="section">
+
+            <h3>🤖 ComicCraft AI</h3>
+
+            <br>
+
+            <p>
+                ${answer}
+            </p>
+
+        </div>
+
+        `;
+
+}
+
+
+
+/* CLEAR */
+
+function clearStory() {
+
+    document.getElementById("title").value = "";
+
+    document.getElementById("story").value = "";
+
+    document.getElementById("storyResult").innerHTML = "";
+
+    panels = [];
+
+    renderPanels();
+
+}
+
+
+
+/* WORD COUNT */
+
+function updateStats() {
+
+    document.getElementById("comicCount")
+        .textContent = comics.length;
+
+
+    document.getElementById("characterCount")
+        .textContent = characters.length;
+
+
+    document.getElementById("panelCount")
+        .textContent = panels.length;
+
+
+    const story =
+        document.getElementById("story").value;
+
+
+    const words =
+        story.trim()
+        ? story.trim().split(/\s+/).length
+        : 0;
+
+
+    document.getElementById("wordCount")
+        .textContent = words;
+
+}
+
+
+
+/* INITIAL */
+
+renderCharacters();
+
+renderPanels();
+
+updateStats();
+
+</script>
+
+</body>
+</html>
